@@ -64,17 +64,24 @@ using namespace std;
 
 //////////////////////////////////////////////////////////////////////////
 
-#define EXEC_BINARY_NAME				"EasyLuaEncryptor"
-#define EXEC_BINARY_VERSION				"0.0.1"
+#include "xxtea/xxtea.h"
 
-#define XXTEA_KEY						"2dxLua"
-#define XXTEA_KEY_LENGTH				(sizeof(XXTEA_KEY) - 1)
-#define XXTEA_SIGN						"XXTEA"
-#define XXTEA_SIGN_LENGTH				(sizeof(XXTEA_SIGN) - 1)
+#define EXEC_BINARY_NAME						"EasyLuaEncryptor"
+#define EXEC_BINARY_VERSION						"0.0.1"
+
+#define DEFAULT_XXTEA_KEY						"2dxLua"
+#define DEFAULT_XXTEA_SIGN						"XXTEA"
+
+static bool s_bCompileToByteCode = false;
+static string s_strKey(DEFAULT_XXTEA_KEY);
+static string s_strSign(DEFAULT_XXTEA_SIGN);
+static const char * XXTEA_KEY = nullptr;
+static size_t XXTEA_KEY_LENGTH = 0;
+static const char * XXTEA_SIGN = nullptr;
+static size_t XXTEA_SIGN_LENGTH = 0;
+static vector<string> s_vectorLuaFiles;
 
 //////////////////////////////////////////////////////////////////////////
-
-#include "xxtea/xxtea.h"
 
 static void PrintInfo(void)
 {
@@ -85,12 +92,12 @@ static void PrintInfo(void)
 	printf("*\r\n");
 	printf("* Usage:\r\n");
 	printf("* ------\r\n");
-	printf("* %s [-compile] <Dir>\r\n", EXEC_BINARY_NAME);
+	printf("* %s [options] <Dir>\r\n", EXEC_BINARY_NAME);
+	printf("*  --compile     Compile to LuaJIT bytecode.\r\n");
+	printf("*  -key Key      Set XXTEA key.\r\n");
+	printf("*  -sign Sign    Set XXTEA sign.\r\n");
 	printf("************************************\r\n");
 }
-
-static bool s_bCompileToByteCode = false;
-static vector<string> s_vectorLuaFiles;
 
 static void SearchLuaFilesInDirectory(string & strPath)
 {
@@ -381,15 +388,37 @@ int main(int argc, char * argv[])
 
 	string strRoot = "." PATH_SEPARATOR_STRING;;
 
-	if (argc >= 2)
+	if (argc > 1)
 	{
 		for (int i = 1; i < argc; i++)
 		{
 			string strArg(argv[i]);
 
-			if ("-compile" == strArg)
+			if ("--compile" == strArg)
 			{
 				s_bCompileToByteCode = true;
+			}
+			else if ("-key" == strArg)
+			{
+				if (i >= argc - 1)
+				{
+					return -1;
+				}
+				else
+				{
+					s_strKey = argv[++i];
+				}
+			}
+			else if ("-sign" == strArg)
+			{
+				if (i >= argc - 1)
+				{
+					return -1;
+				}
+				else
+				{
+					s_strSign = argv[++i];
+				}
 			}
 			else
 			{
@@ -397,6 +426,11 @@ int main(int argc, char * argv[])
 			}
 		}
 	}
+
+	XXTEA_KEY = &s_strKey.at(0);
+	XXTEA_KEY_LENGTH = s_strKey.length();
+	XXTEA_SIGN = &s_strSign.at(0);
+	XXTEA_SIGN_LENGTH = s_strSign.length();
 
 	char cLastChar = strRoot[strRoot.length() - 1];
 
