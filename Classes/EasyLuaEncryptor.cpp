@@ -89,15 +89,6 @@ static void PrintInfo(void)
 	printf("************************************\r\n");
 }
 
-#ifndef WIN32
-
-static int MacUnlinkCallback(const char * szPath, const struct stat * pStat, int nTypeflag, struct FTW * pFtw)
-{
-	return remove(szPath);
-}
-
-#endif
-
 static bool s_bCompileToByteCode = false;
 static vector<string> s_vectorLuaFiles;
 
@@ -160,7 +151,6 @@ static void SearchLuaFilesInDirectory(string & strPath)
 
 	if (!(dir = opendir(strPath.c_str())))
 	{
-		printf("Cannot be accessed: %s\r\n", strPath.c_str());
 		return;
 	}
 
@@ -168,7 +158,7 @@ static void SearchLuaFilesInDirectory(string & strPath)
 	{
 		string strFileName = entry->d_name;
 
-		if ("." == strFileName || ".." == strFileName || ".svn" == strFileName || ".git" == strFileName)
+		if ('.' == strFileName[0])
 		{
 			//
 		}
@@ -179,47 +169,25 @@ static void SearchLuaFilesInDirectory(string & strPath)
 			lstat(strSub.c_str(), &statbuf);
 
 			bool bIsDir = S_ISDIR(statbuf.st_mode);
-			bool bStartingWithDot = ('.' == strFileName[0]);
 
 			if (bIsDir)
 			{
 				strSub += PATH_SEPARATOR_STRING;
-				CleanDirectory(strSub, bRemoveAll || bStartingWithDot);
+				SearchLuaFilesInDirectory(strSub);
 			}
-			else if (bRemoveAll || bStartingWithDot)
+			else if (strFileName.length() > 4)
 			{
-				if (-1 == remove(strSub.c_str()))
+				const char * pLast4Chars = &strSub.at(strSub.length() - 4);
+
+				if (0 == memcmp(pLast4Chars, ".lua", 4))
 				{
-					printf("Remove file failed: %s\r\n", strSub.c_str());
-				}
-				else
-				{
-					printf("File removed: %s\r\n", strSub.c_str());
+					s_vectorLuaFiles.push_back(strSub);
 				}
 			}
 		}
 	}
 
 	closedir(dir);
-
-	if (bRemoveAll)
-	{
-		if (-1 == remove(strPath.c_str()))
-		{
-			if (nftw(strPath.c_str(), MacUnlinkCallback, 64, FTW_DEPTH | FTW_PHYS))
-			{
-				printf("Remove directory failed: %s\r\n", strPath.c_str());
-			}
-			else
-			{
-				printf("Directory removed: %s\r\n", strPath.c_str());
-			}
-		}
-		else
-		{
-			printf("Directory removed: %s\r\n", strPath.c_str());
-		}
-	}
 
 #endif
 }
@@ -373,7 +341,7 @@ bool Encrypt(string & strLuaFile)
 	}
 
 	xxtea_long nEncryptedDataLength;
-	unsigned char * pEncryptedData = xxtea_encrypt(pFileContent, nFileLength, (unsigned char *)XXTEA_KEY, XXTEA_KEY_LENGTH, &nEncryptedDataLength);
+	unsigned char * pEncryptedData = xxtea_encrypt(pFileContent, (xxtea_long)nFileLength, (unsigned char *)XXTEA_KEY, XXTEA_KEY_LENGTH, &nEncryptedDataLength);
 
 	free(pFileContent);
 	pFileContent = nullptr;
@@ -430,7 +398,6 @@ int main(int argc, char * argv[])
 		}
 	}
 
-	strRoot = "E:\\Proj\\3.x\\Games\\WWII\\trunk\\Assets";
 	char cLastChar = strRoot[strRoot.length() - 1];
 
 	if (PATH_SEPARATOR_CHAR != cLastChar && '/' != cLastChar)

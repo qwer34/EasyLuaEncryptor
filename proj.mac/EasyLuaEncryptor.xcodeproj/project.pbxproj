@@ -1,0 +1,254 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		2272A41B1BA09111005BE13A /* EasyLuaEncryptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2272A4171BA09111005BE13A /* EasyLuaEncryptor.cpp */; settings = {ASSET_TAGS = (); }; };
+		2272A41C1BA09111005BE13A /* xxtea.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 2272A4191BA09111005BE13A /* xxtea.cpp */; settings = {ASSET_TAGS = (); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		2272A40A1BA0903F005BE13A /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		2272A40C1BA0903F005BE13A /* EasyLuaEncryptor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = EasyLuaEncryptor; sourceTree = BUILT_PRODUCTS_DIR; };
+		2272A4171BA09111005BE13A /* EasyLuaEncryptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = EasyLuaEncryptor.cpp; sourceTree = "<group>"; };
+		2272A4191BA09111005BE13A /* xxtea.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xxtea.cpp; sourceTree = "<group>"; };
+		2272A41A1BA09111005BE13A /* xxtea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xxtea.h; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		2272A4091BA0903F005BE13A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		2272A4031BA0903F005BE13A = {
+			isa = PBXGroup;
+			children = (
+				2272A4161BA09111005BE13A /* Classes */,
+				2272A40D1BA0903F005BE13A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		2272A40D1BA0903F005BE13A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				2272A40C1BA0903F005BE13A /* EasyLuaEncryptor */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		2272A4161BA09111005BE13A /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				2272A4171BA09111005BE13A /* EasyLuaEncryptor.cpp */,
+				2272A4181BA09111005BE13A /* xxtea */,
+			);
+			name = Classes;
+			path = ../Classes;
+			sourceTree = "<group>";
+		};
+		2272A4181BA09111005BE13A /* xxtea */ = {
+			isa = PBXGroup;
+			children = (
+				2272A4191BA09111005BE13A /* xxtea.cpp */,
+				2272A41A1BA09111005BE13A /* xxtea.h */,
+			);
+			path = xxtea;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		2272A40B1BA0903F005BE13A /* EasyLuaEncryptor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2272A4131BA0903F005BE13A /* Build configuration list for PBXNativeTarget "EasyLuaEncryptor" */;
+			buildPhases = (
+				2272A4081BA0903F005BE13A /* Sources */,
+				2272A4091BA0903F005BE13A /* Frameworks */,
+				2272A40A1BA0903F005BE13A /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = EasyLuaEncryptor;
+			productName = EasyLuaEncryptor;
+			productReference = 2272A40C1BA0903F005BE13A /* EasyLuaEncryptor */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		2272A4041BA0903F005BE13A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0700;
+				ORGANIZATIONNAME = Xin;
+				TargetAttributes = {
+					2272A40B1BA0903F005BE13A = {
+						CreatedOnToolsVersion = 7.0;
+					};
+				};
+			};
+			buildConfigurationList = 2272A4071BA0903F005BE13A /* Build configuration list for PBXProject "EasyLuaEncryptor" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 2272A4031BA0903F005BE13A;
+			productRefGroup = 2272A40D1BA0903F005BE13A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				2272A40B1BA0903F005BE13A /* EasyLuaEncryptor */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		2272A4081BA0903F005BE13A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2272A41C1BA09111005BE13A /* xxtea.cpp in Sources */,
+				2272A41B1BA09111005BE13A /* EasyLuaEncryptor.cpp in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		2272A4111BA0903F005BE13A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		2272A4121BA0903F005BE13A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "c++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.7;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		2272A4141BA0903F005BE13A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		2272A4151BA0903F005BE13A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		2272A4071BA0903F005BE13A /* Build configuration list for PBXProject "EasyLuaEncryptor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2272A4111BA0903F005BE13A /* Debug */,
+				2272A4121BA0903F005BE13A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2272A4131BA0903F005BE13A /* Build configuration list for PBXNativeTarget "EasyLuaEncryptor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2272A4141BA0903F005BE13A /* Debug */,
+				2272A4151BA0903F005BE13A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 2272A4041BA0903F005BE13A /* Project object */;
+}
