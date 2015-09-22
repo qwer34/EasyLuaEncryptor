@@ -67,12 +67,13 @@ using namespace std;
 #include "xxtea/xxtea.h"
 
 #define EXEC_BINARY_NAME						"EasyLuaEncryptor"
-#define EXEC_BINARY_VERSION						"0.0.1"
+#define EXEC_BINARY_VERSION						"0.0.2"
 
 #define DEFAULT_XXTEA_KEY						"2dxLua"
 #define DEFAULT_XXTEA_SIGN						"XXTEA"
 
 static bool s_bCompileToByteCode = false;
+static string s_strLuaJitPath;
 static string s_strKey(DEFAULT_XXTEA_KEY);
 static string s_strSign(DEFAULT_XXTEA_SIGN);
 static const char * XXTEA_KEY = nullptr;
@@ -326,9 +327,53 @@ static bool WriteFile(const char * szFilePath, const unsigned char * pDataToWrit
 
 bool Encrypt(string & strLuaFile)
 {
-	cout << strLuaFile << endl;
+	printf("%s\r\n", strLuaFile.c_str());
 
-	const char * szLuaFile = strLuaFile.c_str();
+	string strLuaFileFinal = strLuaFile;
+
+#ifdef WIN32
+	if (s_bCompileToByteCode)
+	{
+		STARTUPINFO si = { 0 };
+		PROCESS_INFORMATION pi = { 0 };
+		string strCmdLuaJit = "\"" + s_strLuaJitPath + "\" -b \"" + strLuaFile + "\" \"" + strLuaFile + "c\"";
+
+#if defined(DEBUG) || defined(_DEBUG)
+		printf("%s\r\n", strCmdLuaJit.c_str());
+#endif
+
+		si.cb = sizeof(STARTUPINFO);
+		GetStartupInfo(&si);
+
+		BOOL bRet = CreateProcessA(NULL, (char *)(strCmdLuaJit.c_str()), NULL, NULL, FALSE, NULL, NULL, NULL, &si, &pi); // 创建子进程
+		DWORD dwExitCode = 99999;
+
+		if (bRet) // 输入信息
+		{
+			CloseHandle(pi.hThread);
+			WaitForSingleObject(pi.hProcess, INFINITE);
+			GetExitCodeProcess(pi.hProcess, &dwExitCode);
+			CloseHandle(pi.hProcess);
+		}
+		else
+		{
+			printf("Compile failed: %s\r\n", strLuaFile.c_str());
+			return false;
+		}
+
+		if (0 == dwExitCode && -1 != remove(strLuaFile.c_str()))
+		{
+			strLuaFileFinal += "c";
+		}
+		else
+		{
+			printf("Compile failed: %s\r\n", strLuaFile.c_str());
+			return false;
+		}
+	}
+#endif
+
+	const char * szLuaFile = strLuaFileFinal.c_str();
 	size_t nFileLength;
 	unsigned char * pFileContent = ReadFile(szLuaFile, &nFileLength);
 
@@ -342,7 +387,7 @@ bool Encrypt(string & strLuaFile)
 		free(pFileContent);
 		pFileContent = nullptr;
 
-		cout << strLuaFile << " already encrypted." << endl;
+		printf("%s already encrypted.\r\n", szLuaFile);
 
 		return false;
 	}
@@ -397,6 +442,16 @@ int main(int argc, char * argv[])
 			if ("--compile" == strArg)
 			{
 				s_bCompileToByteCode = true;
+
+#ifdef WIN32
+				char * buf = (char *)malloc(600);
+				GetModuleFileNameA(NULL, buf, 600); //得到当前模块路径
+				char * pLastSlash = strrchr(buf, '\\');
+				strcpy(pLastSlash + 1, "luajit.exe");
+				printf("LuaJit path: %s\r\n", buf);
+				s_strLuaJitPath = buf;
+				free(buf);
+#endif
 			}
 			else if ("-key" == strArg)
 			{
@@ -464,7 +519,7 @@ int main(int argc, char * argv[])
 			{
 				if (!Encrypt(s_vectorLuaFiles[nCurrentLuaFileNumber]))
 				{
-					cout << "Failed: " << s_vectorLuaFiles[nCurrentLuaFileNumber] << endl;
+					printf("Failed: %s\r\n", s_vectorLuaFiles[nCurrentLuaFileNumber].c_str());
 				}
 
 				nCurrentLuaFileNumber += nCpuCoreNumber;
@@ -476,7 +531,7 @@ int main(int argc, char * argv[])
 
 	while (true)
 	{
-		this_thread::sleep_for(chrono::milliseconds(200));
+		this_thread::sleep_for(chrono::milliseconds(100));
 
 		bool bAllThreadsEnd = true;
 
